@@ -22,7 +22,6 @@
 open('test.txt', 'r')
 ----
 
-image::G:/学习视频/python视频/python新买/0.0-课件/阶段1-Python核心编程/课件/08-模块_包_异常/01-异常.assets/image-20190305154200725.png[image-20190305154200725]
 
 == 二. 异常的写法
 
@@ -221,7 +220,6 @@ if __name__ == '__main__':
 
 思考：什么是文件？
 
-image::C:\Users\amdin\Desktop\python基础公开课\笔记\1.jpg[1]
 
 思考：文件操作包含什么？
 

@@ -134,7 +134,6 @@ ____
 
 ===== 2.2 特别关注的响应头字段
 
-image:C:\Users\admin\Desktop\农大\http的响应形式.png[image]
 
 ____
 http响应的形式如上图所示，爬虫只关注一个响应头字段
@@ -173,7 +172,6 @@ ____
 在回顾完http协议后，我们来了解以下浏览器发送http请求的过程
 ____
 
-image:C:\Users\admin\Desktop\农大\http发送的过程.png[image]
 
 ===== 4.1 http请求的过程
 

@@ -12,20 +12,17 @@
 
 === 一,Python简介
 
-image:C:\Users\admin\Desktop\桌面\python基础公开课\基础笔记\images\image1.png[image]
 
 Python是时下最流行、最火爆的编程语言之一，具体原因如下：
 
 [arabic]
 . 简单、易学，适应人群广泛
 
-image:C:\Users\admin\Desktop\桌面\python基础公开课\基础笔记\images\image-20190110163249963.png[image]
 
 [arabic, start=2]
 . 免费、开源
 . 应用领域广泛
 
-image:C:\Users\admin\Desktop\桌面\python基础公开课\基础笔记\images\image-20190110162845453-7108925.png[image]
 
 ____
 备注：以下知名框架均是Python语言开发。
@@ -42,7 +39,6 @@ ____
 •Python 是由荷兰人 Guido van Rossum （ 龟叔 ）在 1989
 年圣诞节期间，为打发无聊的圣诞节假期而编写的一个解释性编程语言，现在是当今最受欢迎的编程语言之一。
 
-image:C:\Users\admin\Desktop\桌面\python基础公开课\基础笔记\images\1608605078068.png[image]
 
 •Python 这个名字，来自龟叔所挚爱的 BBC 电视剧 《Monty Python’s Flying
 Circus》。
@@ -61,19 +57,19 @@ Circus》。
 
 • 优点：
 
-Ø 简单易用，容易上手
+. 简单易用，容易上手
 
-Ø 可移植性，跨平台
+. 可移植性，跨平台
 
-Ø 强大的库支持，开发效率高
+. 强大的库支持，开发效率高
 
-Ø 可扩展性
+. 可扩展性
 
 • 缺点：
 
-Ø 运行速度比编译型语言慢
+. 运行速度比编译型语言慢
 
-Ø Python 的 GIL 锁限制并发
+. Python 的 GIL 锁限制并发
 
 扩展：什么是编译型语言？什么是解释型语言？区别？
 
@@ -140,9 +136,7 @@ ____
 [单击上述链接] – 查找目标文件：Windows x86-64 executable installer –
 单击即可下载。
 
-image::C:\Users\admin\Desktop\桌面\python基础公开课\基础笔记\images\1608606820181.png[1608606820181]
 
-image:C:\Users\admin\Desktop\桌面\python基础公开课\基础笔记\images\image-20190110170855787-7111335.png[image]
 
 ===== 安装：
 
@@ -170,7 +164,6 @@ ____
 
 下载地址：http://www.jetbrains.com/pycharm/download/#section=windows
 
-image:C:\Users\admin\Desktop\桌面\python基础公开课\基础笔记\images\image-20190110172355909-7112235.png[image]
 
 ===== 安装：
 
@@ -351,7 +344,6 @@ print('hello easthome')
 
 在 Python 里为了应对不同的业务需求，也把数据分为不同的类型。
 
-image:C:\Users\admin\Desktop\桌面\python基础公开课\基础笔记\images\image-20190111124628584-7181988.png[image]
 
 其中数值型（int，float，complex）和布尔型（bool）是基本数据类型。
 
@@ -449,7 +441,6 @@ print(str(True))
 
 程序中，数据都是临时存储在内存中，为了更快速的查找或使用这个数据，通常我们把这个数据在内存中存储之后定义一个名称，这个名称就是变量。
 
-image:C:\Users\admin\Desktop\桌面\python基础公开课\基础笔记\images\image-20190122123202213.png[image]
 
 *变量就是一个存储数据的的时候当前数据所在的内存地址的名字而已，方便我们后续的在编写代码的过程中使用。*
 

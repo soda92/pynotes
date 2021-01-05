@@ -36,7 +36,6 @@ print("End!")
 
 在程序开发中，必然用到针对这些判断语句进行详细讲解，判断结构主要分为以下几种用法：
 
-image::C:\Users\admin\Desktop\桌面\python基础公开课\基础笔记\images\1608689485663.png[1608689485663]
 
 * *单分支结构*
 * *双分支结构*
@@ -553,7 +552,6 @@ while j <= 4:
 
 分别使用while循环和for循环试下九九乘法表的输出
 
-image::C:\Users\admin\Desktop\桌面\python基础公开课\基础笔记\images\1608697718855.png[1608697718855]
 
 [source,python]
 ----

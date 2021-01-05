@@ -26,7 +26,6 @@
 
 *关系型数据库效果图:*
 
-image:C:\Users\admin\Desktop\桌面\Python进阶公开课\课堂笔记\image\关系型数据库.png[image]
 
 *关系型数据库中核心元素*
 
@@ -62,7 +61,6 @@ image:C:\Users\admin\Desktop\桌面\Python进阶公开课\课堂笔记\image\关
 
 *用户浏览商品列表效果图:*
 
-image:C:\Users\admin\Desktop\桌面\Python进阶公开课\课堂笔记\image\1604311655.png[image]
 
 ==== 4. 数据库的特点
 

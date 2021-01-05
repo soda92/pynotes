@@ -4,7 +4,6 @@
 
 === 1 学习Flask框架的原因
 
-image:C:\Users\admin\Desktop\2018年Web框架占比.png[image]
 
 2018 Python官方年度调研报告显示Flask与Django为Python
 Web开发使用最主要的两个框架

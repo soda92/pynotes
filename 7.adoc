@@ -808,7 +808,6 @@ else:
 
 *多任务效果图:*
 
-image:C:\Users\admin\Desktop\桌面\Python进阶公开课\课堂笔记\image\Y4P%5DJSGN$K_K%7B%60Q$U%5B%7BQMU1.png[image]
 
 ==== 1.3 多任务的执行方式
 
@@ -855,9 +854,7 @@ image:C:\Users\admin\Desktop\桌面\Python进阶公开课\课堂笔记\image\Y4P
 * 进程是操作系统进行资源分配的基本单位。
 * 进程是Python程序中实现多任务的一种方式
 
-image::C:\Users\admin\Desktop\桌面\Python进阶公开课\课堂笔记\image\单继承.png[1605077161245]
 
-image::C:\Users\admin\Desktop\桌面\Python进阶公开课\课堂笔记\image\多进程.png[1605077064140]
 
 ==== 2.4 Python中多进程的使用
 
@@ -1258,8 +1255,7 @@ if __name__ == '__main__':
     # 总结: 多进程之间不共享全局变量
 ----
 
-**执行结果:**image:[image]
-
+**执行结果:**
 [source,python]
 ----
 add: 0
@@ -1274,7 +1270,6 @@ read_data []
 
 *进程之间不共享全局变量的解释效果图:*
 
-image:C:\Users\admin\Desktop\桌面\Python进阶公开课\课堂笔记\image\多任务.png[image]
 
 ===== 2.7.3. 进程之间不共享全局变量的小结
 
@@ -1407,7 +1402,6 @@ over
 
 *多线程效果图:*
 
-image:C:\Users\admin\Desktop\桌面\Python进阶公开课\课堂笔记\image\多线程.png[image]
 
 * 线程是Python程序中实现多任务的另外一种方式，线程的执行需要cpu调度来完成。
 
@@ -1934,7 +1928,6 @@ sum2: 2000000
 
 *为了更好的理解互斥锁，请看下面的图:*
 
-image:C:\Users\admin\Desktop\桌面\Python进阶公开课\课堂笔记\image\互斥锁.png[image]
 
 ==== 4.2. 互斥锁的使用
 
@@ -2040,7 +2033,6 @@ sum2: 2000000
 
 为了更好的理解死锁，来看一个现实生活的效果图:
 
-image:C:\Users\admin\Desktop\桌面\Python进阶公开课\课堂笔记\image\死锁.png[image]
 
 *说明:*
 

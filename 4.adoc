@@ -37,7 +37,6 @@ print(sum_result)
 
 * 执行结果
 
-image::G:\学习视频\python视频\python新买\0.0-课件\阶段1-Python核心编程\课件\05-函数\03-函数加强.assets\1.png[1]
 
 == lambda 表达式
 
@@ -248,7 +247,6 @@ ____
 
 类比如是制造洗衣机时要用到的图纸，也就是说==类是用来创建对象==。
 
-image::C:\Users\amdin\Desktop\python基础公开课\笔记\图片\image-20190222154356953.png[image-20190222154356953]
 
 ==== 2.1.2 对象
 
@@ -258,7 +256,6 @@ ____
 注意：开发中，先有类，再有对象。
 ____
 
-image::C:\Users\amdin\Desktop\python基础公开课\笔记\图片\image-20190222154727379.png[image-20190222154727379]
 
 === 2.2 面向对象实现方法
 
@@ -572,7 +569,6 @@ del haier1
 
 生活中的继承，一般指的是子女继承父辈的财产。
 
-image::C:\Users\amdin\Desktop\python基础公开课\笔记\图片\1.png[1]
 
 * 拓展1：经典类或旧式类
 
