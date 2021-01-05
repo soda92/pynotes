@@ -1,0 +1,871 @@
+== 笔记6
+
+=== 今日内容：
+
+* mysql数据库的基本操作
+* 常用的sql语句
+* Python连接mysql数据库实现增删改查
+* Python操作Excel表格中的数据
+
+=== 一、mysql数据库
+
+==== 数据库的基本介绍
+
+==== 1.数据库的介绍
+
+数据库就是**存储和管理数据的仓库**，数据按照一定的格式进行存储，用户可以对数据库中的数据进行增加、修改、删除、查询等操作。
+
+==== 2. 数据库的分类
+
+* 关系型数据库
+* 非关系型数据库
+
+*关系型数据库:*
+
+是指采用了关系模型来组织数据的数据库，简单来说，*关系模型指的就是二维表格模型*，好比Excel文件中的表格，强调使用表格的方式存储数据。
+
+*关系型数据库效果图:*
+
+image:C:\Users\admin\Desktop\桌面\Python进阶公开课\课堂笔记\image\关系型数据库.png[image]
+
+*关系型数据库中核心元素*
+
+* 数据行
+* 数据列
+* 数据表
+* 数据库(数据表的集合)
+
+*常用的关系型数据库:*
+
+* Oracle
+* Microsoft SQL Server
+* MySQL
+* SQLite
+
+*非关系型数据库:*
+
+非关系型数据库，又被称为NoSQL（Not Only SQL )，意为不仅仅是SQL，对NoSQL
+最普遍的定义是``非关联型的''，强调 Key-Value 的方式存储数据。
+
+*常用的非关系型数据库:*
+
+* MongoDB
+* Redis
+
+提示:
+目前我们先学习一下关系型数据库，而非关系型数据库会在后面课程中进行学习，大家先知道一下即可。
+
+==== 3. 数据库的作用
+
+数据库的作用就是存储和管理数据的，比如:
+我们在京东网站上的浏览的商品列表数据，这些数据都会存储在数据库。
+
+*用户浏览商品列表效果图:*
+
+image:C:\Users\admin\Desktop\桌面\Python进阶公开课\课堂笔记\image\1604311655.png[image]
+
+==== 4. 数据库的特点
+
+[arabic]
+. 持久化存储
+. 读写速度极高
+. 保证数据的有效性
+
+==== mysql数据库的安装及使用
+
+===== 1. MySQL数据库的介绍
+
+MySQL是一个关系型数据库管理系统，在 WEB 应用方面，MySQL是最好的 RDBMS
+(Relational Database Management System，关系数据库管理系统)
+应用软件，它是由瑞典MySQL AB 公司开发，目前属于 Oracle 旗下产品，MySQL
+是最流行的关系型数据库管理系统中的一个。
+
+*MySQL的特点:*
+
+[arabic]
+. MySQL是开源的，所以你不需要支付额外的费用。
+. MySQL支持大型的数据库。可以处理拥有上千万条记录的大型数据库。
+. MySQL使用标准的SQL数据语言形式。
+. MySQL可以安装在不同的操作系统，并且提供多种编程语言的操作接口。这些编程语言包括C、C++、Python、Java、Ruby等等。
+
+===== 2. MySQL数据库的
+
+借助安装的操作文档进行安装
+
+===== 3. SQL语句的介绍
+
+SQL(Structured Query
+Language)是结构化查询语言，是一种用来操作RDBMS的数据库的语言。也就是说通过
+SQL 可以操作 oracle,sql server,mysql,sqlite 等关系型的数据库。
+
+SQL的作用是实现数据库客户端和数据库服务端之间的通信，SQL就是通信的桥梁。
+
+*SQL语言主要分为：*
+
+* *DQL：数据查询语言，用于对数据进行查询，如select*
+* *DML：数据操作语言，对数据进行增加、修改、删除，如insert、update、delete*
+* TPL：事务处理语言，对事务进行处理，包括begin
+transaction、commit、rollback
+* DCL：数据控制语言，进行授权与权限回收，如grant、revoke
+* DDL：数据定义语言，进行数据库、表的管理等，如create、drop
+
+*说明:*
+
+* 对于程序员来讲，重点是数据的增、删、改、查，必须熟练编写DQL、DML，能够编写DDL完成数据库、表的操作，其它操作如TPL、DCL了解即可.
+* SQL语言不区分大小写
+
+===== 4.常用的sql语句介绍
+
+* 能够知道使用命令行连接数据库命令
+* 能够写出增、删、改、查的SQL语句
+
+===== 登录和登出数据库
+
+*登录数据库:*
+
+输入下面命令:
+
+[source,sql]
+----
+mysql -uroot -p
+----
+
+*说明:*
+
+* -u 后面是登录的用户名
+* -p 后面是登录密码, 如果不填写, 回车之后会提示输入密码
+
+*登录成功后, 输入如下命令查看效果：*
+
+[source,sql]
+----
+# 显示当前时间
+select now();
+----
+
+*登出(退出)数据库:*
+
+[source,sql]
+----
+quit 或 exit 或 ctrl + Z
+----
+
+===== 数据库操作的SQL语句
+
+[arabic]
+. 查看所有数据库
++
+[source,sql]
+----
+show databases;
+----
+. 创建数据库
++
+[source,sql]
+----
+create database 数据库名 charset=utf8;
+例：
+create database python charset=utf8;
+----
+. 使用数据库
++
+[source,sql]
+----
+use 数据库名;
+----
+. 查看当前使用的数据库
++
+[source,sql]
+----
+select database();
+----
+. 删除数据库-慎重
++
+[source,sql]
+----
+drop database 数据库名;
+例：
+drop database python;
+----
+
+==== 表结构操作的SQL语句
+
+===== 数据类型和约束
+
+大家都知道数据库中的数据保存在数据表中，在表中为了更加准确的存储数据，保证数据的正确有效，可以在创建表的时候，为表添加一些强制性的验证，比如:数据类型和约束。
+
+==== 数据类型
+
+数据类型是指在创建表的时候为表中字段指定数据类型，只有数据符合类型要求才能存储起来，使用数据类型的原则是:够用就行，尽量使用取值范围小的，而不用大的，这样可以更多的节省存储空间。
+
+*常用数据类型如下:*
+
+* 整数：int，bit
+* 小数：decimal
+* 字符串：varchar,char
+* 日期时间: date, time, datetime
+* 枚举类型(enum)
+
+*数据类型说明:*
+
+* decimal表示浮点数，如 decimal(5, 2) 表示共存5位数，小数占 2 位.
+* char表示固定长度的字符串，如char(3)，如果填充’ab’时会补一个空格为’ab
+’，3表示字符数
+* varchar表示可变长度的字符串，如varchar(3)，填充’ab’时就会存储’ab’，3表示字符数
+* 对于图片、音频、视频等文件，不存储在数据库中，而是上传到某个服务器上，然后在表中存储这个文件的保存路径.
+* 字符串 text 表示存储大文本，当字符大于 4000 时推荐使用, 比如技术博客.
+
+==== 数据约束
+
+约束是指数据在数据类型限定的基础上额外增加的要求.
+
+*常见的约束如下:*
+
+* 主键 primary key: 物理上存储的顺序. MySQL 建议所有表的主键字段都叫 id,
+类型为 int unsigned.
+* 非空 not null: 此字段不允许填写空值.
+* 惟一 unique: 此字段的值不允许重复.
+* 默认 default: 当不填写字段对应的值会使用默认值，如果填写时以填写为准.
+* 外键 foreign key: 对关系字段进行约束, 当为关系字段填写值时,
+会到关联的表中查询此值是否存在, 如果存在则填写成功,
+如果不存在则填写失败并抛出异常.
+
+==== 数据类型附录表
+
+===== 1. 整数类型
+
+[width="100%",cols="<14%,<9%,<49%,<28%",options="header",]
+|===
+|类型 |字节大小 |有符号范围(Signed) |无符号范围(Unsigned)
+|TINYINT |1 |-128 ~ 127 |0 ~ 255
+
+|SMALLINT |2 |-32768 ~ 32767 |0 ~ 65535
+
+|MEDIUMINT |3 |-8388608 ~ 8388607 |0 ~ 16777215
+
+|INT/INTEGER |4 |-2147483648 ~2147483647 |0 ~ 4294967295
+
+|BIGINT |8 |-9223372036854775808 ~ 9223372036854775807 |0 ~
+18446744073709551615
+|===
+
+===== 2. 字符串
+
+[cols="<,<,<",options="header",]
+|===
+|类型 |说明 |使用场景
+|CHAR |固定长度，小型数据 |身份证号、手机号、电话、密码
+|VARCHAR |可变长度，小型数据 |姓名、地址、品牌、型号
+|TEXT |可变长度，字符个数大于 4000 |存储小型文章或者新闻
+|LONGTEXT |可变长度， 极大型文本数据 |存储极大型文本数据
+|===
+
+===== 3. 时间类型
+
+[cols="<,<,<",options="header",]
+|===
+|类型 |字节大小 |示例
+|DATE |4 |`2020-01-01'
+|TIME |3 |`12:29:59'
+|DATETIME |8 |`2020-01-01 12:29:59'
+|YEAR |1 |`2017'
+|TIMESTAMP |4 |`1970-01-01 00:00:01' UTC ~ `2038-01-01 00:00:01' UTC
+|===
+
+==== 总结
+
+* 常用的数据类型:
+** 整数：int，bit
+** 小数：decimal
+** 字符串：varchar,char
+** 日期时间: date, time, datetime
+** 枚举类型(enum)
+* 常见的约束:
+** 主键约束 primary key
+** 非空约束 not null
+** 惟一约束 unique
+** 默认约束 default
+** 外键约束 foreign key
+* 数据类型和约束保证了表中数据的准确性和完整性
+
+===== sql语句的具体操作
+
+[arabic]
+. 查看当前数据库中所有表
++
+[source,sql]
+----
+show tables;
+----
+. 创建表
++
+[source,sql]
+----
+create table students(
+ id int unsigned primary key auto_increment not null,
+ name varchar(20) not null,
+ age tinyint unsigned default 0,
+ height decimal(5,2),
+ gender enum('男','女','人妖','保密')
+);
+----
++
+*说明:*
++
+[source,sql]
+----
+create table 表名(
+字段名称 数据类型  可选的约束条件,
+column1 datatype contrai,
+...
+);
+----
+. 修改表-添加字段
++
+[source,sql]
+----
+alter table 表名 add 列名 类型 约束;
+例：
+alter table students add birthday datetime;
+----
+. 修改表-修改字段类型
++
+[source,sql]
+----
+alter table 表名 modify 列名 类型 约束;
+例：
+alter table students modify birthday date not null;
+----
++
+*说明:*
+* modify: 只能修改字段类型或者约束，不能修改字段名
+. 修改表-修改字段名和字段类型
++
+[source,sql]
+----
+alter table 表名 change 原名 新名 类型及约束;
+例：
+alter table students change birthday birth datetime not null;
+----
++
+*说明:*
+* change: 既能对字段重命名又能修改字段类型还能修改约束
+. 修改表-删除字段
++
+[source,sql]
+----
+alter table 表名 drop 列名;
+例：
+alter table students drop birthday;
+----
+. 查看创表SQL语句
++
+[source,sql]
+----
+show create table 表名;
+例：
+show create table students;
+----
+. 查看创库SQL语句
++
+[source,sql]
+----
+show create database 数据库名;
+例：
+show create database mytest;
+----
+. 删除表
++
+[source,sql]
+----
+drop table 表名;
+例：
+drop table students;
+----
+
+===== 表数据操作的SQL语句
+
+[arabic]
+. 查询数据
++
+[source,sql]
+----
+-- 1. 查询所有列
+select * from 表名;
+例：
+select * from students;
+-- 2. 查询指定列
+select 列1,列2,... from 表名;
+例：
+select id,name from students;
+----
+. 添加数据
++
+[source,sql]
+----
+-- 1. 全列插入：值的顺序与表结构字段的顺序完全一一对应
+insert into 表名 values (...)
+例:
+insert into students values(0, 'xx', default, default, '男');
+-- 2. 部分列插入：值的顺序与给出的列顺序对应
+insert into 表名 (列1,...) values(值1,...)
+例:
+insert into students(name, age) values('王二小', 15);
+-- 3. 全列多行插入
+insert into 表名 values(...),(...)...;
+例:
+insert into students values(0, '张飞', 55, 1.75, '男'),(0, '关羽', 58, 1.85, '男');
+-- 4. 部分列多行插入
+insert into 表名(列1,...) values(值1,...),(值1,...)...;
+例：
+insert into students(name, height) values('刘备', 1.75),('曹操', 1.6);
+----
++
+*说明:*
+* 主键列是自动增长，但是在全列插入时需要占位，通常使用空值(0或者null或者default)
+* 在全列插入时，如果字段列有默认值可以使用 default
+来占位，插入后的数据就是之前设置的默认值
+. 修改数据
++
+[source,sql]
+----
+update 表名 set 列1=值1,列2=值2... where 条件
+例：
+update students set age = 18, gender = '女' where id = 6;
+----
+. 删除数据
++
+[source,sql]
+----
+delete from 表名 where 条件
+例：
+delete from students where id=5;
+----
++
+问题:
++
+上面的操作称之为物理删除，一旦删除就不容易恢复，我们可以使用逻辑删除的方式来解决这个问题。
++
+[source,sql]
+----
+-- 添加删除表示字段，0表示未删除 1表示删除
+alter table students add isdelete bit default 0;
+-- 逻辑删除数据
+update students set isdelete = 1 where id = 8;
+----
++
+*说明:*
+* 逻辑删除，本质就是修改操作
+
+=== 三、PyMySQL的使用
+
+==== 1.*安装pymysql第三方包:*
+
+....
+pip install --user pymysql
+....
+
+==== *2.pymysql的使用:*
+
+[arabic]
+. 导入 pymysql 包
++
+[source,py]
+----
+ import pymysql
+----
+. 创建连接对象
++
+调用pymysql模块中的connect()函数来创建连接对象,代码如下:
++
+[source,python]
+----
+ conn=connect(参数列表)
+
+ * 参数host：连接的mysql主机，如果本机是'localhost'
+ * 参数port：连接的mysql主机的端口，默认是3306
+ * 参数user：连接的用户名
+ * 参数password：连接的密码
+ * 参数database：数据库的名称
+ * 参数charset：通信采用的编码方式，推荐使用utf8
+----
++
+*连接对象操作说明:*
+* 关闭连接 conn.close()
+* 提交数据 conn.commit()
+* 撤销数据 conn.rollback()
+. 获取游标对象
++
+获取游标对象的目标就是要执行sql语句，完成对数据库的增、删、改、查操作。代码如下:
++
+[source,py]
+----
+ # 调用连接对象的cursor()方法获取游标对象   
+ cur =conn.cursor()
+----
++
+*游标操作说明:*
+* 使用游标执行SQL语句: execute(operation [parameters ])
+执行SQL语句，返回受影响的行数，主要用于执行insert、update、delete、select等语句
+* 获取查询结果集中的一条数据:cur.fetchone()返回一个元组, 如 (1,`张三')
+* 获取查询结果集中的所有数据:
+cur.fetchall()返回一个元组,如((1,`张三'),(2,`李四'))
+* 关闭游标: cur.close(),表示和数据库操作完成
+. pymysql完成数据的查询操作
++
+[source,python]
+----
+import pymysql
+
+# 创建连接对象
+conn = pymysql.connect(host='localhost', port=3306, user='root', password='mysql',database='python', charset='utf8')
+
+# 获取游标对象
+cursor = conn.cursor()
+
+# 查询 SQL 语句
+sql = "select * from students;"
+# 执行 SQL 语句 返回值就是 SQL 语句在执行过程中影响的行数
+row_count = cursor.execute(sql)
+print("SQL 语句执行影响的行数%d" % row_count)
+
+# 取出结果集中一行数据,　例如:(1, '张三')
+# print(cursor.fetchone())
+
+# 取出结果集中的所有数据, 例如:((1, '张三'), (2, '李四'), (3, '王五'))
+for line in cursor.fetchall():
+    print(line)
+
+# 关闭游标
+cursor.close()
+
+# 关闭连接
+conn.close()
+----
+. pymysql完成对数据的增删改
++
+[source,python]
+----
+import pymysql
+
+# 创建连接对象
+conn = pymysql.connect(host='localhost', port=3306, user='root', password='mysql',database='python', charset='utf8')
+
+# 获取游标对象
+cursor = conn.cursor()
+
+try:
+    # 添加 SQL 语句
+    # sql = "insert into students(name) values('刘璐'), ('王美丽');"
+    # 删除 SQ L语句
+    # sql = "delete from students where id = 5;"
+    # 修改 SQL 语句
+    sql = "update students set name = '王铁蛋' where id = 6;"
+    # 执行 SQL 语句
+    row_count = cursor.execute(sql)
+    print("SQL 语句执行影响的行数%d" % row_count)
+    # 提交数据到数据库
+    conn.commit()
+except Exception as e:
+    # 回滚数据， 即撤销刚刚的SQL语句操作
+    conn.rollback()
+
+# 关闭游标
+cursor.close()
+
+# 关闭连接
+conn.close()
+----
++
+*说明:*
+* conn.commit() 表示将修改操作提交到数据库
+* conn.rollback() 表示回滚数据
+. 防止SQL注入
++
+什么是SQL注入?
++
+用户提交带有恶意的数据与SQL语句进行字符串方式的拼接，从而影响了SQL语句的语义，最终产生数据泄露的现象。
++
+如何防止SQL注入?
++
+SQL语句参数化
+* SQL语言中的参数使用%s来占位，此处不是python中的字符串格式化操作
+* 将SQL语句中%s占位所需要的参数存在一个列表中，把参数列表传递给execute方法中第二个参数
++
+*防止SQL注入的示例代码:*
+
+[source,python]
+----
+from pymysql import connect
+
+def main():
+
+    find_name = input("请输入物品名称：")
+
+    # 创建Connection连接
+    conn = connect(host='localhost',port=3306,user='root',password='mysql',database='jing_dong',charset='utf8')
+    # 获得Cursor对象
+    cs1 = conn.cursor()
+
+    # 非安全的方式
+    # 输入 ' or 1 = 1 or '   (单引号也要输入)
+    # sql = "select * from goods where name='%s'" % find_name
+    # print("""sql===>%s<====""" % sql)
+    # # 执行select语句，并返回受影响的行数：查询所有数据
+    # count = cs1.execute(sql)
+
+    # 安全的方式
+    # 构造参数列表
+    params = [find_name]
+    # 执行select语句，并返回受影响的行数：查询所有数据
+    count = cs1.execute("select * from goods where name=%s", params)
+    # 注意：
+    # 如果要是有多个参数，需要进行参数化
+    # 那么params = [数值1, 数值2....]，此时sql语句中有多个%s即可
+    # %s 不需要带引号
+
+    # 打印受影响的行数
+    print(count)
+    # 获取查询的结果
+    # result = cs1.fetchone()
+    result = cs1.fetchall()
+    # 打印查询的结果
+    print(result)
+    # 关闭Cursor对象
+    cs1.close()
+    # 关闭Connection对象
+    conn.close()
+
+if __name__ == '__main__':
+    main()
+----
+
+*说明:*
+
+* execute方法中的 %s 占位不需要带引号
+
+=== 四、Excel表格的操作
+
+==== 学习目标
+
+[arabic]
+. 使用python代码读取excel表格中内容并绘制图表
+. 使用python向excel中写入数据
+. excel与数据库的联合操作
+
+==== 读取excel数据
+
+Python完成读取excel表格中的数据步骤：
+
+[arabic]
+. 安装xlrd模块
+. 导入模块xlrd
+. 打开excel表格，获取workbook对象
+. 获取excel中的sheet工作表对象
+. 进行读写操作
+
+具体代码实现：
+
+[source,python]
+----
+import xlrd
+from pyecharts.charts import Bar
+
+# Python读取excel中的数据
+# 借助xlrd模块读取excel表格中的数据
+
+# 1.打开excel表格
+# 2.获取excel表格中的工作表sheet
+# 3.获取sheet中的数据，行或者列
+# 4.读取相关的内容
+# 5.借助echarts模块绘制可视化大图
+excel_book = xlrd.open_workbook("employee.xlsx")
+print(excel_book)
+# 获取excel表中的工作表,获取其中某一个工作表
+excel_sheet = excel_book.sheets()[0]
+print(excel_sheet)
+
+# 获取sheet工作表中的行和列
+# 获取行数
+print(excel_sheet.nrows)
+# 获取列的数量
+print(excel_sheet.ncols)
+# 获取其中某一行或者某一列的值,从0开始
+print(excel_sheet.row_values(1))
+print(excel_sheet.col_values(2))
+
+# 使用for循环获取所有行的数据
+# for row in range(0,21):
+#     print(excel_sheet.row_values(row))
+
+# for row in range(1,excel_sheet.nrows):
+#     print(excel_sheet.row_values(row))
+
+# 需求：想只获取姓名并且获取其对应的销售业绩
+names = []
+sales = []
+for row in range(1,excel_sheet.nrows):
+    # 遍历时获取每一个姓名，追加到姓名列表
+    name = excel_sheet.row_values(row)[0]
+    names.append(name)
+    # 遍历时获取每一个销售业绩，追加到销售业绩列表
+    sale = excel_sheet.row_values(row)[2]
+    sales.append(sale)
+
+print(names)
+print(sales)
+
+# 根据姓名和销售业绩绘制柱状图，姓名是x轴，销售业绩是y轴
+# 创建柱状图对象
+bar = Bar()
+# 添加x和y
+bar.add_xaxis(names)
+bar.add_yaxis("当月销售额表",sales)
+bar.render("销售情况.html")
+----
+
+==== 写入excel数据
+
+向excel表中写入数据的步骤：
+
+[arabic]
+. 下载xlwt或者xlsxwriter模块
+. 导入模块xlsxwriter
+. 打开excel表格，并且获取excel对象
+. 获取工作表sheet
+. 执行写入操作
+. 关闭工作表
+
+具体代码实现：
+
+[source,python]
+----
+# 向excel中写入数据
+# xlwt可以实现写入数据到excel表格
+# xlsxwriter也可以实现写入数据到excel表格，不过功能更加强大
+import xlsxwriter
+
+# 获取要写入数据的excel对象
+excel_book = xlsxwriter.Workbook("stus.xlsx")
+# 添加一个工作表
+work_sheet = excel_book.add_worksheet()
+# 设置当前工作表以及附带的格式
+work_sheet.write("A1","学号")
+work_sheet.write("B1","姓名")
+work_sheet.write("C1","年龄")
+work_sheet.write("D1","成绩")
+# 设置工作表中添加数据的行和列
+row = 1
+col = 0
+stus_list = [("0001","张三",18,92),("0002","李四",19,90),("0003","如花",18,88),("0004","似玉",19,85)]
+# 通过遍历的方式写入数据到excel
+for id,name,age,score in stus_list:
+    work_sheet.write(row, col, id)
+    work_sheet.write(row, col+1, name)
+    work_sheet.write(row, col+2, age)
+    work_sheet.write(row, col+3, score)
+    # 每写完一行数据row+1
+    row += 1
+
+excel_book.close()
+----
+
+===== mysql数据写入到excel
+
+把mysql中的数据读取后，写入到excel表格
+
+实现步骤：
+
+[arabic]
+. 获取数据库连接
+. 读取数据中的数据封装到list
+. 把获取到的数据写入excel
+
+具体的代码实现
+
+获取数据库连接
+
+[source,python]
+----
+import pymysql
+
+# 获取连接
+def get_conn():
+    conn = pymysql.connect(host="localhost",port=3306,
+                           user="root",password="root",
+                           database="stus",charset="utf8")
+    cursor = conn.cursor()
+
+    return conn,cursor
+
+# 断开连接
+def close_conn(conn,cursor):
+    cursor.close()
+    conn.close()
+----
+
+实现数据的读写操作
+
+[source,python]
+----
+# 从数据库到excel表格数据的操作
+from day05.rt_03_data_utils import *
+import xlsxwriter
+# 从数据库读取数据到列表
+def get_data():
+    # 获取数据库连接和cursor对象
+    conn, cursor = get_conn()
+    # 获取数据表中的所有数据
+    sql = "select * from stu_info"
+    # 执行查询语句
+    count = cursor.execute(sql)
+    # 获取具体查询后的数据
+    tuple_datas = cursor.fetchall()
+    print(tuple_datas)
+    list_datas = list(tuple_datas)
+    list_new = []
+    # list_data = []
+    for data in list_datas:
+        data = list(data)
+        # list_data.append(data[0])
+        # list_data.append(data[1])
+        # list_data.append(data[2])
+        list_new.append(data)
+    print(list_new)
+    return list_new
+
+
+# 把数据写入excel表格
+def write_to_excel(lists):
+    # 创建一个excel文档
+    workbook = xlsxwriter.Workbook("datas.xlsx")
+    # 添加一个工作表
+    worksheet = workbook.add_worksheet()
+
+    # 设置单元表格的表头以及附带的格式
+    worksheet.write("A1", "学号")
+    worksheet.write("B1", "姓名")
+    worksheet.write("C1", "年龄")
+    worksheet.write("D1", "班级")
+    worksheet.write("E1", "成绩")
+
+    # 设置工作表中的行和列
+    row, col = 1, 0
+    # 开始添加数据
+    for id,sid,name,age,classes,score in lists:
+        # 把数据放入行列
+        worksheet.write(row, col, sid)
+        worksheet.write(row, col + 1, name)
+        worksheet.write(row, col + 2, age)
+        worksheet.write(row, col + 3, classes)
+        worksheet.write(row, col + 4, score)
+        # 每遍历一条数据行增加1
+        row += 1
+
+    workbook.close()
+
+
+if __name__ == '__main__':
+
+    write_to_excel(get_data())
+----

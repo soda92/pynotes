@@ -1,0 +1,676 @@
+== 笔记5
+
+== 课程：异常
+
+== 目标
+
+* 了解异常
+* 捕获异常
+* 异常的else
+* 异常finally
+* 抛出异常
+* 自定义异常
+
+== 一. 了解异常
+
+当检测到一个错误时，解释器就无法继续执行了，反而出现了一些错误的提示，这就是所谓的``异常''。
+
+例如：以`r`方式打开一个不存在的文件。
+
+[source,python]
+----
+open('test.txt', 'r')
+----
+
+image::G:/学习视频/python视频/python新买/0.0-课件/阶段1-Python核心编程/课件/08-模块_包_异常/01-异常.assets/image-20190305154200725.png[image-20190305154200725]
+
+== 二. 异常的写法
+
+=== 2.1 语法
+
+[source,python]
+----
+try:
+    可能发生错误的代码
+except:
+    如果出现异常执行的代码
+----
+
+=== 2.2 快速体验
+
+需求：尝试以`r`模式打开文件，如果文件不存在，则以`w`方式打开。
+
+[source,python]
+----
+try:
+    f = open('test.txt', 'r')
+except:
+    f = open('test.txt', 'w')
+----
+
+=== 2.3 捕获指定异常
+
+==== 2.3.1 语法
+
+[source,python]
+----
+try:
+    可能发生错误的代码
+except 异常类型:
+    如果捕获到该异常类型执行的代码
+----
+
+==== 2.3.2 体验
+
+[source,python]
+----
+try:
+    print(num)
+except NameError:
+    print('有错误')
+----
+
+____
+注意：
+
+[arabic]
+. 如果尝试执行的代码的异常类型和要捕获的异常类型不一致，则无法捕获异常。
+. 一般try下方只放一行尝试执行的代码。
+____
+
+==== 2.3.3 捕获多个指定异常
+
+当捕获多个异常时，可以把要捕获的异常类型的名字，放到except
+后，并使用元组的方式进行书写。
+
+[source,python]
+----
+try:
+    print(1/0)
+
+except (NameError, ZeroDivisionError):
+    print('有错误')
+----
+
+==== 2.3.4 捕获异常描述信息
+
+[source,python]
+----
+try:
+    print(num)
+except (NameError, ZeroDivisionError) as result:
+    print(result)
+----
+
+==== 2.3.5 捕获所有异常
+
+Exception是所有程序异常类的父类。
+
+[source,python]
+----
+try:
+    print(num)
+except Exception as result:
+    print(result)
+----
+
+=== 2.4 异常的else
+
+else表示的是如果没有异常要执行的代码。
+
+[source,python]
+----
+try:
+    print(1)
+except Exception as result:
+    print(result)
+else:
+    print('我是else，是没有异常的时候执行的代码')
+----
+
+=== 2.5 异常的finally
+
+finally表示的是无论是否异常都要执行的代码，例如关闭文件。
+
+[source,python]
+----
+try:
+    f = open('test.txt', 'r')
+except Exception as result:
+    f = open('test.txt', 'w')
+else:
+    print('没有异常，真开心')
+finally:
+    f.close()
+----
+
+== 三. 抛出异常
+
+....
+# 如果不想对异常进行处理，我们可以抛出异常给调用者处理,抛出异常使用raise
+....
+
+....
+def test():
+    pwd = input("请输入您的密码：")
+    if len(pwd) <= 8:
+        # 否则抛出异常
+        e = Exception("密码格式不符合要求！")
+        # 抛出异常
+        raise e
+
+    print("密码验证通过！")
+
+if __name__ == '__main__':
+    # 抛出异常直接给了调用者
+    # 但是这个最终是要处理的，如果不处理程序依然会崩溃
+    # 我们最终处理的方式依然是捕获异常
+    try:
+        test()
+    except BaseException as e:
+        print(repr(e))
+....
+
+== 四.自定义异常
+
+....
+# 自己定义异常类型
+
+class MyException(BaseException):
+
+    def __init__(self,errorInfo):
+
+        self.error_info = errorInfo
+
+    def __str__(self):
+
+        return "这是我自己定义的异常，发生了一个未知的错误！"
+
+def test():
+    pwd = input("请输入您要检测的密码：")
+
+    if len(pwd) < 8:
+        # 抛出异常，自己定义的异常类型
+        my_exption = MyException("密码长度不符合要求！")
+        print(my_exption)
+        raise my_exption
+
+    print("密码符合要求！")
+
+
+if __name__ == '__main__':
+    try:
+        test()
+    except MyException as my:
+        print(repr(my))
+....
+
+== 课程：文件操作
+
+== 目标
+
+* 文件操作的作用
+* 文件的基本操作
+** 打开
+** 读写
+** 关闭
+* 文件备份
+* 文件和文件夹的操作
+
+== 一. 文件操作的作用
+
+思考：什么是文件？
+
+image::C:\Users\amdin\Desktop\python基础公开课\笔记\1.jpg[1]
+
+思考：文件操作包含什么？
+
+答：打开、关闭、读、写、复制….
+
+思考：文件操作的的作用是什么？
+
+答：读取内容、写入内容、备份内容……
+
+____
+总结：文件操作的作用就是==把一些内容(数据)存储存放起来，可以让程序下一次执行的时候直接使用，而不必重新制作一份，省时省力==。
+____
+
+== 二. 文件的基本操作
+
+=== 2.1 文件操作步骤
+
+[arabic]
+. 打开文件
+. 读写等操作
+. 关闭文件
+
+____
+注意：可以只打开和关闭文件，不进行任何读写操作。
+____
+
+==== 2.1.1 打开
+
+在python，使用open函数，可以打开一个已经存在的文件，或者创建一个新文件，语法如下：
+
+[source,python]
+----
+open(name, mode)
+----
+
+name：是要打开的目标文件名的字符串(可以包含文件所在的具体路径)。
+
+mode：设置打开文件的模式(访问模式)：只读、写入、追加等。
+
+===== 2.1.1.1 打开文件模式
+
+[width="100%",cols="^7%,93%",options="header",]
+|===
+|模式 |描述
+|r |以只读方式打开文件。文件的指针将会放在文件的开头。这是默认模式。
+
+|rb
+|以二进制格式打开一个文件用于只读。文件指针将会放在文件的开头。这是默认模式。
+
+|r+ |打开一个文件用于读写。文件指针将会放在文件的开头。
+
+|rb+ |以二进制格式打开一个文件用于读写。文件指针将会放在文件的开头。
+
+|w
+|打开一个文件只用于写入。如果该文件已存在则打开文件，并从开头开始编辑，即原有内容会被删除。如果该文件不存在，创建新文件。
+
+|wb
+|以二进制格式打开一个文件只用于写入。如果该文件已存在则打开文件，并从开头开始编辑，即原有内容会被删除。如果该文件不存在，创建新文件。
+
+|w+
+|打开一个文件用于读写。如果该文件已存在则打开文件，并从开头开始编辑，即原有内容会被删除。如果该文件不存在，创建新文件。
+
+|wb+
+|以二进制格式打开一个文件用于读写。如果该文件已存在则打开文件，并从开头开始编辑，即原有内容会被删除。如果该文件不存在，创建新文件。
+
+|a
+|打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。也就是说，新的内容将会被写入到已有内容之后。如果该文件不存在，创建新文件进行写入。
+
+|ab
+|以二进制格式打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。也就是说，新的内容将会被写入到已有内容之后。如果该文件不存在，创建新文件进行写入。
+
+|a+
+|打开一个文件用于读写。如果该文件已存在，文件指针将会放在文件的结尾。文件打开时会是追加模式。如果该文件不存在，创建新文件用于读写。
+
+|ab+
+|以二进制格式打开一个文件用于追加。如果该文件已存在，文件指针将会放在文件的结尾。如果该文件不存在，创建新文件用于读写。
+|===
+
+===== 2.1.1.2 快速体验
+
+[source,python]
+----
+f = open('test.txt', 'w')
+----
+
+____
+注意：此时的`f`是`open`函数的文件对象。
+____
+
+==== 2.1.2 文件对象方法
+
+===== 2.1.2.1 写
+
+* 语法
+
+[source,python]
+----
+对象对象.write('内容')
+----
+
+* 体验
+
+[source,python]
+----
+# 1. 打开文件
+f = open('test.txt', 'w')
+
+# 2.文件写入
+f.write('hello world')
+
+# 3. 关闭文件
+f.close()
+----
+
+____
+注意：
+
+[arabic]
+. `w`和`a`模式：如果文件不存在则创建该文件；如果文件存在，`w`模式先清空再写入，`a`模式直接末尾追加。
+. `r`模式：如果文件不存在则报错。
+____
+
+===== 2.1.2.2 读
+
+* read()
+
+[source,python]
+----
+文件对象.read(num)
+----
+
+____
+num表示要从文件中读取的数据的长度（单位是字节），如果没有传入num，那么就表示读取文件中所有的数据。
+____
+
+* readlines()
+
+readlines可以按照行的方式把整个文件中的内容进行一次性读取，并且返回的是一个列表，其中每一行的数据为一个元素。
+
+[source,python]
+----
+f = open('test.txt')
+content = f.readlines()
+
+# ['hello world\n', 'abcdefg\n', 'aaa\n', 'bbb\n', 'ccc']
+print(content)
+
+# 关闭文件
+f.close()
+----
+
+* readline()
+
+readline()一次读取一行内容。
+
+[source,python]
+----
+f = open('test.txt')
+
+content = f.readline()
+print(f'第一行：{content}')
+
+content = f.readline()
+print(f'第二行：{content}')
+
+# 关闭文件
+f.close()
+----
+
+===== 2.1.2.3 seek()
+
+作用：用来移动文件指针。
+
+语法如下：
+
+[source,python]
+----
+文件对象.seek(偏移量, 起始位置)
+----
+
+____
+起始位置：
+
+* 0：文件开头
+* 1：当前位置
+* 2：文件结尾
+____
+
+==== 2.1.3 关闭
+
+[source,open]
+----
+文件对象.close()
+----
+
+== 三. 文件备份
+
+需求：用户输入当前目录下任意文件名，程序完成对该文件的备份功能(备份文件名为xx[备份]后缀，例如：test[备份].txt)。
+
+=== 3.1 步骤
+
+[arabic]
+. 接收用户输入的文件名
+. 规划备份文件名
+. 备份文件写入数据
+
+=== 3.2 代码实现
+
+[arabic]
+. 接收用户输入目标文件名
+
+[source,python]
+----
+old_name = input('请输入您要备份的文件名：')
+----
+
+[arabic, start=2]
+. 规划备份文件名
++
+2.1 提取目标文件后缀
++
+2.2 组织备份的文件名，xx[备份]后缀
+
+[source,python]
+----
+# 2.1 提取文件后缀点的下标
+index = old_name.rfind('.')
+
+# print(index)  # 后缀中.的下标
+
+# print(old_name[:index])  # 源文件名（无后缀）
+
+# 2.2 组织新文件名 旧文件名 + [备份] + 后缀
+new_name = old_name[:index] + '[备份]' + old_name[index:]
+
+# 打印新文件名（带后缀）
+# print(new_name)
+----
+
+[arabic, start=3]
+. 备份文件写入数据
++
+3.1 打开源文件 和 备份文件
++
+3.2 将源文件数据写入备份文件
++
+3.3 关闭文件
+
+[source,python]
+----
+# 3.1 打开文件
+old_f = open(old_name, 'rb')
+new_f = open(new_name, 'wb')
+
+# 3.2 将源文件数据写入备份文件
+while True:
+    con = old_f.read(1024)
+    if len(con) == 0:
+        break
+    new_f.write(con)
+
+# 3.3 关闭文件
+old_f.close()
+new_f.close()
+----
+
+=== 3.3 思考
+
+如果用户输入`.txt`，这是一个无效文件，程序如何更改才能限制只有有效的文件名才能备份？
+
+答：添加条件判断即可。
+
+[source,python]
+----
+old_name = input('请输入您要备份的文件名：')
+
+index = old_name.rfind('.')
+
+
+if index > 0:
+    postfix = old_name[index:]
+
+new_name = old_name[:index] + '[备份]' + postfix
+
+old_f = open(old_name, 'rb')
+new_f = open(new_name, 'wb')
+
+while True:
+    con = old_f.read(1024)
+    if len(con) == 0:
+        break
+    new_f.write(con)
+
+old_f.close()
+new_f.close()
+----
+
+== 四. 文件和文件夹的操作
+
+在Python中文件和文件夹的操作要借助os模块里面的相关功能，具体步骤如下：
+
+[arabic]
+. 导入os模块
+
+[source,python]
+----
+import os
+----
+
+[arabic, start=2]
+. 使用`os`模块相关功能
+
+[source,python]
+----
+os.函数名()
+----
+
+=== 4.1 文件重命名
+
+[source,python]
+----
+os.rename(目标文件名, 新文件名)
+----
+
+=== 4.2 删除文件
+
+[source,python]
+----
+os.remove(目标文件名)
+----
+
+=== 4.3 创建文件夹
+
+[source,python]
+----
+os.mkdir(文件夹名字)
+----
+
+=== 4.4 删除文件夹
+
+[source,python]
+----
+os.rmdir(文件夹名字)
+----
+
+=== 4.5 获取当前目录
+
+[source,python]
+----
+os.getcwd()
+----
+
+=== 4.6 改变默认目录
+
+[source,python]
+----
+os.chdir(目录)
+----
+
+=== 4.7 获取目录列表
+
+[source,python]
+----
+os.listdir(目录)
+----
+
+== 五.应用案例
+
+需求：批量修改文件名，既可添加指定字符串，又能删除指定字符串。
+
+* 步骤
+
+[arabic]
+. 设置添加删除字符串的的标识
+. 获取指定目录的所有文件
+. 将原有文件名添加/删除指定字符串，构造新名字
+. os.rename()重命名
+
+* 代码
+
+[source,python]
+----
+import os
+
+# 设置重命名标识：如果为1则添加指定字符，flag取值为2则删除指定字符
+flag = 1
+
+# 获取指定目录
+dir_name = './'
+
+# 获取指定目录的文件列表
+file_list = os.listdir(dir_name)
+# print(file_list)
+
+
+# 遍历文件列表内的文件
+for name in file_list:
+
+    # 添加指定字符
+    if flag == 1:
+        new_name = 'Python-' + name
+    # 删除指定字符
+    elif flag == 2:
+        num = len('Python-')
+        new_name = name[num:]
+
+    # 打印新文件名，测试程序正确性
+    print(new_name)
+    
+    # 重命名
+    os.rename(dir_name+name, dir_name+new_name)
+----
+
+== 六. 总结
+
+* 文件操作步骤
+** 打开
++
+[source,python]
+----
+文件对象 = open(目标文件, 访问模式)
+----
+** 操作
+*** 读
++
+[source,python]
+----
+文件对象.read()
+文件对象.readlines()
+文件对象.readline()
+----
+*** 写
++
+[source,python]
+----
+文件对象.write()
+----
+*** seek()
+** 关闭
++
+[source,python]
+----
+文件对象.close()
+----
+* 主访问模式
+** w：写，文件不存在则新建该文件
+** r：读，文件不存在则报错
+** a：追加
+* 文件和文件夹操作
+** 重命名：os.rename()
+** 获取当前目录：os.getcwd()
+** 获取目录列表：os.listdir()

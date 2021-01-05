@@ -1,0 +1,753 @@
+== 笔记3
+
+=== 一. 函数
+
+* {blank}
++
+====== 函数的介绍
+* {blank}
++
+====== 函数的作用及定义
+* {blank}
++
+====== 函数的中参数介绍
+* {blank}
++
+====== 函数中返回值介绍
+* {blank}
++
+====== 函数的嵌套
+
+==== 1.1 函数的介绍及定义
+
+===== 函数介绍
+
+在实际开发中，如果有若干段代码的执行逻辑完全相同，那么可以考虑将这些代码抽象成一个函数，这样不仅可以提高代码的重用性，而且条理会更加清晰，可靠性更高。
+
+**函数**是组织好的，可重复使用的，用来实现单一或相关联功能的代码段，它能够提高应用的模块化和代码的重复利用率。
+
+Python
+提供了很多内置函数，回忆一下前面我们使用到的一些Python中的**内置函数**
+。除此之外，我们还可以自己创建函数（*自定义函数*）。
+
+....
+好处：提高程序的编写效率，减少代码的冗余
+....
+
+===== 函数定义（语法）：
+
+[source,python]
+----
+def 函数名(参数):
+    代码1
+    代码2
+    ......
+----
+
+===== 函数的调用（使用函数）：
+
+....
+函数名(参数)
+....
+
+____
+注意：
+____
+
+....
+    1. 不同的需求，参数可有可无。
+                2. 在Python中，函数必须==先定义后使用==。
+....
+
+== 三.函数的参数作用
+
+思考：完成需求如下：一个函数完成两个数1和2的加法运算，如何书写程序？
+
+[source,python]
+----
+# 定义函数
+def add_num1():
+    result = 1 + 2
+    print(result)
+
+
+# 调用函数
+add_num1()
+----
+
+思考：上述add_num1函数只能完成数字1和2的加法运算，如果想要这个函数变得更灵活，可以计算任何用户指定的两个数字的和，如何书写程序？
+
+分析：用户要在调用函数的时候指定具体数字，那么在定义函数的时候就需要接收用户指定的数字。函数调用时候指定的数字和定义函数时候接收的数字即是函数的参数。
+
+[source,python]
+----
+# 定义函数时同时定义了接收用户数据的参数a和b，a和b是形参
+def add_num2(a, b):
+    result = a + b
+    print(result)
+
+
+# 调用函数时传入了真实的数据10 和 20，真实数据为实参
+add_num2(10, 20)
+----
+
+== 四.函数的返回值作用
+
+例如：我们去超市购物，比如买烟，给钱之后，是不是售货员会返回给我们烟这个商品，在函数中，如果需要返回结果给用户需要使用函数返回值。
+
+[source,python]
+----
+def buy():
+    return '烟'
+
+# 使用变量保存函数返回值
+goods = buy()
+print(goods)
+----
+
+=== 4.1 应用
+
+需求：制作一个计算器，计算任意两数字之和，并保存结果。
+
+[source,python]
+----
+def sum_num(a, b):
+    return a + b
+
+
+# 用result变量保存函数返回值
+result = sum_num(1, 2)
+print(result)
+----
+
+== 五.函数的说明文档
+
+思考：定义一个函数后，程序员如何书写程序能够快速提示这个函数的作用？
+
+答：注释
+
+思考：如果代码多，我们是不是需要在很多代码中找到这个函数定义的位置才能看到注释？如果想更方便的查看函数的作用怎么办？
+
+答：函数的说明文档
+
+____
+函数的说明文档也叫函数的文档说明。
+____
+
+=== 5.1 语法
+
+* 定义函数的说明文档
+
+[source,python]
+----
+def 函数名(参数):
+    """ 说明文档的位置 """
+    代码
+    ......
+----
+
+* 查看函数的说明文档
+
+[source,python]
+----
+help(函数名)
+----
+
+=== 5.2 快速体验
+
+[source,python]
+----
+def sum_num(a, b):
+    """ 求和函数 """
+    return a + b
+
+
+help(sum_num)
+----
+
+== 六.函数嵌套调用
+
+所谓函数嵌套调用指的是==一个函数里面又调用了另外一个函数==。
+
+* 示例
+
+[source,python]
+----
+def testB():
+    print('---- testB start----')
+    print('这里是testB函数执行的代码...(省略)...')
+    print('---- testB end----')
+
+def testA():
+    print('---- testA start----')
+    testB()
+    print('---- testA end----')
+
+testA()
+----
+
+* 效果
+
+image::G:/那个电脑/学习视频/python视频/python新买/0.0-课件/阶段1-Python核心编程/课件/05-函数/01-函数一.assets/image-20190219113648783.png[image-20190219113648783]
+
+* 执行流程
+
+image::G:/那个电脑/学习视频/python视频/python新买/0.0-课件/阶段1-Python核心编程/课件/05-函数/01-函数一.assets/1.png[image-20190219113648783]
+
+____
+* 如果函数A中，调用了另外一个函数B，那么先把函数B中的任务都执行完毕之后才会回到上次
+函数A执行的位置。
+____
+
+== 七. 函数应用
+
+=== 7.1 打印图形
+
+[arabic]
+. 打印一条横线
+
+[source,python]
+----
+def print_line():
+    print('-' * 20)
+
+
+print_line()
+----
+
+[arabic, start=2]
+. 打印多条横线
+
+[source,python]
+----
+def print_line():
+    print('-' * 20)
+
+
+def print_lines(num):
+    i = 0
+    while i < num:
+        print_line()
+        i += 1
+
+
+print_lines(5)
+----
+
+=== 7.2 函数计算
+
+[arabic]
+. 求三个数之和
+
+[source,python]
+----
+def sum_num(a, b, c):
+    return a + b + c
+
+
+result = sum_num(1, 2, 3)
+print(result)  # 6
+----
+
+[arabic, start=2]
+. 求三个数平均值
+
+[source,python]
+----
+def average_num(a, b, c):
+    sumResult = sum_num(a, b, c)
+    return sumResult / 3
+
+result = average_num(1, 2, 3)
+print(result)  # 2.0
+----
+
+== 四. 函数的参数
+
+=== 4.1 位置参数
+
+位置参数：调用函数时根据函数定义的参数位置来传递参数。
+
+[source,python]
+----
+def user_info(name, age, gender):
+    print(f'您的名字是{name}, 年龄是{age}, 性别是{gender}')
+
+
+user_info('TOM', 20, '男')
+----
+
+____
+注意：传递和定义参数的顺序及个数必须一致。
+____
+
+=== 4.2 关键字参数
+
+函数调用，通过``键=值''形式加以指定。可以让函数更加清晰、容易使用，同时也清除了参数的顺序需求。
+
+[source,python]
+----
+def user_info(name, age, gender):
+    print(f'您的名字是{name}, 年龄是{age}, 性别是{gender}')
+
+
+user_info('Rose', age=20, gender='女')
+user_info('小明', gender='男', age=16)
+----
+
+注意：*函数调用时，如果有位置参数时，位置参数必须在关键字参数的前面，但关键字参数之间不存在先后顺序。*
+
+=== 4.3 缺省参数
+
+缺省参数也叫默认参数，用于定义函数，为参数提供默认值，调用函数时可不传该默认参数的值（注意：所有位置参数必须出现在默认参数前，包括函数定义和调用）。
+
+[source,python]
+----
+def user_info(name, age, gender='男'):
+    print(f'您的名字是{name}, 年龄是{age}, 性别是{gender}')
+
+
+user_info('TOM', 20)
+user_info('Rose', 18, '女')
+----
+
+____
+注意：函数调用时，如果为缺省参数传值则修改默认参数值；否则使用这个默认值。
+____
+
+=== 4.4 不定长参数
+
+不定长参数也叫可变参数。用于不确定调用的时候会传递多少个参数(不传参也可以)的场景。此时，可用包裹(packing)位置参数，或者包裹关键字参数，来进行参数传递，会显得非常方便。
+
+* 包裹位置传递
+
+[source,python]
+----
+def user_info(*args):
+    print(args)
+
+
+# ('TOM',)
+user_info('TOM')
+# ('TOM', 18)
+user_info('TOM', 18)
+----
+
+____
+注意：传进的所有参数都会被args变量收集，它会根据传进参数的位置合并为一个元组(tuple)，args是元组类型，这就是包裹位置传递。
+____
+
+* 包裹关键字传递
+
+[source,python]
+----
+def user_info(**kwargs):
+    print(kwargs)
+
+
+# {'name': 'TOM', 'age': 18, 'id': 110}
+user_info(name='TOM', age=18, id=110)
+----
+
+____
+综上：无论是包裹位置传递还是包裹关键字传递，都是一个组包的过程。
+____
+
+== 八. 总结
+
+* 函数的作用：封装代码，高效的代码重用
+* 函数使用步骤
+** 定义函数
++
+[source,python]
+----
+def 函数名():
+    代码1
+    代码2
+    ...
+----
+** 调用函数
++
+[source,python]
+----
+函数名()
+----
+* 函数的参数：函数调用的时候可以传入真实数据，增大函数的使用的灵活性
+** 形参：函数定义时书写的参数(非真实数据)
+** 实参：函数调用时书写的参数(真实数据)
+* 函数的返回值
+** 作用：函数调用后，返回需要的计算结果
+** 写法
++
+[source,python]
+----
+return 表达式
+----
+* 函数的说明文档
+** 作用：保存函数解释说明的信息
+** 写法
++
+[source,python]
+----
+def 函数名():
+    """ 函数说明文档 """
+----
+* 函数嵌套调用：一个函数内部嵌套调用另外一个函数
+
+== 课程：模块和包
+
+== 目标。
+
+* 了解模块
+* 导入模块
+* `__all__`列表
+* 制作模块
+* 包的使用方法
+* 案例
+
+== 一. 模块
+
+Python 模块(Module)，是一个 Python 文件，以 .py 结尾，包含了 Python
+对象定义和Python语句。
+
+模块能定义函数，类和变量，模块里也能包含可执行的代码。
+
+回忆之前使用过的模块，random，keyword，math等
+
+查看创建项目后的lib目录下包含的py文件
+
+=== 1.1. 导入模块
+
+==== 1.1.1 导入模块的方式
+
+* import 模块名
+* from 模块名 import 功能名
+* from 模块名 import *
+* import 模块名 as 别名
+* from 模块名 import 功能名 as 别名
+
+==== 1.1.2 导入方式详解
+
+===== 1.1.2.1 import
+
+* 语法
+
+[source,python]
+----
+# 1. 导入模块
+import 模块名
+import 模块名1, 模块名2...
+
+# 2. 调用功能
+模块名.功能名()
+----
+
+* 体验
+
+[source,python]
+----
+import math
+print(math.sqrt(9))  # 3.0
+----
+
+===== 1.1.2.2 from..import..
+
+* 语法
+
+[source,python]
+----
+from 模块名 import 功能1, 功能2, 功能3...
+----
+
+* 体验
+
+[source,python]
+----
+from math import sqrt
+print(sqrt(9))
+----
+
+===== 1.1.2.3 from .. import *
+
+* 语法
+
+[source,python]
+----
+from 模块名 import *
+----
+
+* 体验
+
+[source,python]
+----
+from math import *
+print(sqrt(9))
+----
+
+===== 1.1.2.4 as定义别名
+
+作用：提高工作效率
+
+* 语法
+
+[source,python]
+----
+# 模块定义别名
+import 模块名 as 别名
+
+# 功能定义别名
+from 模块名 import 功能 as 别名
+----
+
+* 体验
+
+[source,python]
+----
+# 模块别名
+import time as tt
+
+tt.sleep(2)
+print('hello')
+
+# 功能别名
+from time import sleep as sl
+sl(2)
+print('hello')
+----
+
+=== 1.2. 制作模块
+
+在Python中，每个Python文件都可以作为一个模块，模块的名字就是文件的名字。*也就是说自定义模块名必须要符合标识符命名规则。*
+
+作用：降低工作量，提高工作效率，减少代码的冗余，提高代码的复用
+
+==== 1.2.1 定义模块
+
+新建一个Python文件，命名为`my_module1.py`，并定义`testA`函数。
+
+[source,python]
+----
+def testA(a, b):
+    print(a + b)
+----
+
+==== 1.2.2 测试模块
+
+在实际开中，当一个开发人员编写完一个模块后，为了让模块能够在项目中达到想要的效果，不出现bug，这个开发人员会自行在py文件中添加一些测试信息.，例如，在`my_module1.py`文件中添加测试代码。
+
+[source,python]
+----
+def testA(a, b):
+    print(a + b)
+
+
+testA(1, 1)
+----
+
+此时，无论是当前文件，还是其他已经导入了该模块的文件，在运行的时候都会自动执行`testA`函数的调用。
+
+解决办法如下：
+
+[source,python]
+----
+def testA(a, b):
+    print(a + b)
+
+# 只在当前文件中调用该函数，其他导入的文件内不符合该条件，则不执行testA函数调用
+if __name__ == '__main__':
+    testA(1, 1)
+----
+
+==== 1.2.3 调用模块
+
+[source,python]
+----
+import my_module1
+my_module1.testA(1, 1)
+----
+
+==== 1.2.4 注意事项
+
+如果使用`from .. import ..`或`from .. import *`导入多个模块的时候，且模块内有同名功能。当调用这个同名功能的时候，调用到的是后面导入的模块的功能。
+
+* 体验
+
+[source,python]
+----
+# 模块1代码
+def my_test(a, b):
+    print(a + b)
+
+# 模块2代码
+def my_test(a, b):
+    print(a - b)
+   
+# 导入模块和调用功能代码
+from my_module1 import my_test
+from my_module2 import my_test
+
+# my_test函数是模块2中的函数
+my_test(1, 1)
+----
+
+=== 1.3. 模块定位顺序
+
+当导入一个模块，Python解析器对模块位置的搜索顺序是：
+
+[arabic]
+. 当前目录
+. 如果不在当前目录，Python则搜索在shell变量PYTHONPATH下的每个目录。
+. 如果都找不到，Python会察看默认路径。模块搜索路径存储在system模块的sys.path变量中。变量里包含当前目录，PYTHONPATH和由安装过程决定的默认目录。
+
+....
+其实就是由近及远的查找模块，一般通过system模块中的sys
+....
+
+* 注意
+** 自己的文件名不要和已有模块名重复，否则导致模块功能无法使用
+** `使用from 模块名 import 功能`的时候，如果功能名字重复，调用到的是最后定义或导入的功能。
+
+=== 1.4. `__all__`
+
+如果一个模块文件中有`__all__`变量，当使用`from xxx import *`导入时，只能导入这个列表中的元素。
+
+* my_module1模块代码
+
+[source,python]
+----
+__all__ = ['testA']
+
+
+def testA():
+    print('testA')
+
+
+def testB():
+    print('testB')
+----
+
+* 导入模块的文件代码
+
+[source,python]
+----
+from my_module1 import *
+testA()
+testB()
+----
+
+image::02-模块_包.assets/image-20190305175727272.png[image-20190305175727272]
+
+== 二. 包
+
+包将有联系的模块组织在一起，即放到同一个文件夹下，并且在这个文件夹创建一个名字为`__init__.py`
+文件，那么这个文件夹就称之为包。
+
+=== 2.1 制作包
+
+[New] — [Python Package] — 输入包名 — [OK] —
+新建功能模块(有联系的模块)。
+
+注意：新建包后，包内部会自动创建`__init__.py`文件，这个文件控制着包的导入行为。
+
+==== 2.1.1 快速体验
+
+[arabic]
+. 新建包`mypackage`
+. 新建包内模块：`my_module1` 和 `my_module2`
+. 模块内代码如下
+
+[source,python]
+----
+# my_module1
+print(1)
+
+
+def info_print1():
+    print('my_module1')
+----
+
+[source,python]
+----
+# my_module2
+print(2)
+
+
+def info_print2():
+    print('my_module2')
+----
+
+=== 2.2 导入包
+
+==== 2.2.1 方法一
+
+[source,python]
+----
+import 包名.模块名
+
+包名.模块名.目标
+----
+
+===== 2.2.1.1 体验
+
+[source,python]
+----
+import my_package.my_module1
+
+my_package.my_module1.info_print1()
+----
+
+==== 2.2.2 方法二
+
+注意：必须在`__init__.py`文件中添加`__all__ = []`，控制允许导入的模块列表。
+
+[source,python]
+----
+from 包名 import *
+模块名.目标
+----
+
+===== 2.2.2.1 体验
+
+[source,python]
+----
+from my_package import *
+
+my_module1.info_print1()
+----
+
+== 三. 总结
+
+* 导入模块方法
+
+[source,python]
+----
+import 模块名
+
+from 模块名 import 目标
+
+from 模块名 import *
+----
+
+* 导入包
+
+[source,python]
+----
+import 包名.模块名
+
+from 包名 import *
+----
+
+* `__all__ = []` ：允许导入的模块或功能列表
+
+== 四.阶段案例
+
+'''''
+
+欢迎来到名片信息管理系统【v 1.0】
+**************************************************
+请选择您要执行的操作：
+
+1.查询所有的名片信息 2.添加名片信息 3.搜索名片信息
+
+0.退出当前名片信息管理系统
+************************************************** 请输入您选择的操作：

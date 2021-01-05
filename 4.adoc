@@ -1,0 +1,851 @@
+== 笔记4
+
+== 递归
+
+=== 递归的应用场景
+
+递归是一种编程思想，应用场景：
+
+[arabic]
+. 在我们日常开发中，如果要遍历一个文件夹下面所有的文件，通常会使用递归来实现；
+. 在后续的算法课程中，很多算法都离不开递归，例如：快速排序。
+
+==== 递归的特点
+
+* 函数内部自己调用自己
+* 必须有出口
+
+=== 应用：3以内数字累加和
+
+* 代码
+
+[source,python]
+----
+# 3 + 2 + 1
+def sum_numbers(num):
+    # 1.如果是1，直接返回1 -- 出口
+    if num == 1:
+        return 1
+    # 2.如果不是1，重复执行累加并返回结果
+    return num + sum_numbers(num-1)
+
+
+sum_result = sum_numbers(3)
+# 输出结果为6
+print(sum_result)
+----
+
+* 执行结果
+
+image::G:\学习视频\python视频\python新买\0.0-课件\阶段1-Python核心编程\课件\05-函数\03-函数加强.assets\1.png[1]
+
+== lambda 表达式
+
+=== lambda的应用场景
+
+如果一个函数有一个返回值，并且只有一句代码，可以使用 lambda简化。
+
+=== lambda语法
+
+[source,python]
+----
+变量名（函数名）= lambda 参数列表 ： 表达式
+----
+
+____
+注意
+____
+
+* lambda表达式的参数可有可无，函数的参数在lambda表达式中完全适用。
+* lambda表达式能接收任何数量的参数但只能返回一个表达式的值。
+
+==== 快速入门
+
+[source,python]
+----
+# 函数
+def fn1():
+    return 200
+
+
+print(fn1)
+print(fn1())
+
+
+# lambda表达式
+fn2 = lambda: 100
+print(fn2)
+print(fn2())
+----
+
+____
+注意：直接打印lambda表达式，输出的是此lambda的内存地址
+____
+
+=== 示例：计算a + b
+
+==== 函数实现
+
+[source,python]
+----
+def add(a, b):
+    return a + b
+
+
+result = add(1, 2)
+print(result)
+----
+
+____
+思考：需求简单，是否代码多？
+____
+
+==== lambda实现
+
+[source,python]
+----
+fn1 = lambda a, b: a + b
+print(fn1(1, 2))
+----
+
+=== lambda的参数形式
+
+==== 无参数
+
+[source,python]
+----
+fn1 = lambda: 100
+print(fn1())
+----
+
+==== 一个参数
+
+[source,python]
+----
+fn1 = lambda a: a
+print(fn1('hello world'))
+----
+
+==== 默认参数
+
+[source,python]
+----
+fn1 = lambda a, b, c=100: a + b + c
+print(fn1(10, 20))
+----
+
+==== 可变参数：*args
+
+[source,python]
+----
+fn1 = lambda *args: args
+print(fn1(10, 20, 30))
+----
+
+____
+注意：这里的可变参数传入到lambda之后，返回值为元组。
+____
+
+==== 可变参数：**kwargs
+
+[source,python]
+----
+fn1 = lambda **kwargs: kwargs
+print(fn1(name='python', age=20))
+----
+
+=== 3.5 lambda的应用
+
+==== 带判断的lambda
+
+[source,python]
+----
+fn1 = lambda a, b: a if a > b else b
+print(fn1(1000, 500))
+----
+
+==== 列表数据按字典key的值排序
+
+[source,python]
+----
+students = [
+    {'name': 'TOM', 'age': 20},
+    {'name': 'ROSE', 'age': 19},
+    {'name': 'Jack', 'age': 22}
+]
+
+# 按name值升序排列
+students.sort(key=lambda x: x['name'])
+print(students)
+
+# 按name值降序排列
+students.sort(key=lambda x: x['name'], reverse=True)
+print(students)
+
+# 按age值升序排列
+students.sort(key=lambda x: x['age'])
+print(students)
+----
+
+== 面向对象基础
+
+== 目标
+
+* 理解面向对象
+* 类和对象
+* 添加和获取对象属性
+* 魔法方法
+
+== 一. 理解面向对象
+
+面向对象是一种抽象化的编程思想，很多编程语言中都有的一种思想。
+
+例如：洗衣服
+
+思考：几种途径可以完成洗衣服？
+
+答： 手洗 和 机洗。
+
+手洗：找盆 - 放水 - 加洗衣粉 - 浸泡 - 搓洗 - 拧干水 - 倒水 - 漂洗N次 -
+拧干 - 晾晒。
+
+机洗：打开洗衣机 - 放衣服 - 加洗衣粉 - 按下开始按钮 - 晾晒。
+
+思考：对比两种洗衣服途径，同学们发现了什么？
+
+答：机洗更简单
+
+思考：机洗，只需要找到一台洗衣机，加入简单操作就可以完成洗衣服的工作，而不需要关心洗衣机内部发生了什么事情。
+
+____
+总结：==面向对象就是将编程当成是一个事物，对外界来说，事物是直接使用的，不用去管他内部的情况。而编程就是设置事物能够做什么事。==
+____
+
+== 二. 类和对象
+
+思考：洗衣机洗衣服描述过程中，洗衣机其实就是一个事物，即对象，洗衣机对象哪来的呢？
+
+答：洗衣机是由工厂工人制作出来。
+
+思考：工厂工人怎么制作出的洗衣机？
+
+答：工人根据设计师设计的功能图纸制作洗衣机。
+
+总结：图纸 → 洗衣机 → 洗衣服。
+
+在面向对象编程过程中，有两个重要组成部分：==类== 和 ==对象==。
+
+==类和对象的关系：用类去创建一个对象。==
+
+=== 2.1 理解类和对象
+
+==== 2.1.1 类
+
+类是对一系列具有相同==特征==和==行为==的事物的统称，是一个==抽象的概念==，不是真实存在的事物。
+
+* 特征即是属性
+* 行为即是方法
+
+类比如是制造洗衣机时要用到的图纸，也就是说==类是用来创建对象==。
+
+image::C:\Users\amdin\Desktop\python基础公开课\笔记\图片\image-20190222154356953.png[image-20190222154356953]
+
+==== 2.1.2 对象
+
+对象是类创建出来的真实存在的事物，例如：洗衣机。
+
+____
+注意：开发中，先有类，再有对象。
+____
+
+image::C:\Users\amdin\Desktop\python基础公开课\笔记\图片\image-20190222154727379.png[image-20190222154727379]
+
+=== 2.2 面向对象实现方法
+
+==== 2.2.1 定义类
+
+Python2中类分为：经典类 和 新式类
+
+* 语法
+
+[source,python]
+----
+class 类名():
+    代码
+    ......
+----
+
+____
+注意：类名要满足标识符命名规则，同时遵循==大驼峰命名习惯==。
+____
+
+* 体验
+
+[source,python]
+----
+class Washer():
+    def wash(self):
+        print('我会洗衣服')
+----
+
+* 拓展：经典类
+
+不由任意内置类型派生出的类，称之为经典类
+
+[source,python]
+----
+class 类名:
+    代码
+    ......
+----
+
+==== 2.2.2 创建对象
+
+对象又名实例。
+
+* 语法
+
+[source,python]
+----
+对象名 = 类名()
+----
+
+* 体验
+
+[source,python]
+----
+# 创建对象
+haier1 = Washer()
+
+# <__main__.Washer object at 0x0000018B7B224240>
+print(haier1)
+
+# haier对象调用实例方法
+haier1.wash()
+----
+
+____
+注意：创建对象的过程也叫实例化对象。
+____
+
+==== 2.2.3 self
+
+self指的是调用该函数的对象。
+
+[source,python]
+----
+# 1. 定义类
+class Washer():
+    def wash(self):
+        print('我会洗衣服')
+        # <__main__.Washer object at 0x0000024BA2B34240>
+        print(self)
+
+
+# 2. 创建对象
+haier1 = Washer()
+# <__main__.Washer object at 0x0000018B7B224240>
+print(haier1)
+# haier1对象调用实例方法
+haier1.wash()
+
+
+haier2 = Washer()
+# <__main__.Washer object at 0x0000022005857EF0>
+print(haier2)
+----
+
+____
+注意：打印对象和self得到的结果是一致的，都是当前对象的内存中存储地址。
+____
+
+== 三. 添加和获取对象属性（实例属性）
+
+属性即是特征，比如：洗衣机的宽度、高度、重量…
+
+对象属性既可以在类外面添加和获取，也能在类里面添加和获取。
+
+=== 3.1 类外面添加对象属性
+
+* 语法
+
+[source,python]
+----
+对象名.属性名 = 值
+----
+
+* 体验
+
+[source,python]
+----
+haier1.width = 500
+haier1.height = 800
+----
+
+=== 3.2 类外面获取对象属性
+
+* 语法
+
+[source,python]
+----
+对象名.属性名
+----
+
+* 体验
+
+[source,python]
+----
+print(f'haier1洗衣机的宽度是{haier1.width}')
+print(f'haier1洗衣机的高度是{haier1.height}')
+----
+
+=== 3.3 类里面获取对象属性
+
+* 语法
+
+[source,python]
+----
+self.属性名
+----
+
+* 体验
+
+[source,python]
+----
+# 定义类
+class Washer():
+    def print_info(self):
+        # 类里面获取实例属性
+        print(f'haier1洗衣机的宽度是{self.width}')
+        print(f'haier1洗衣机的高度是{self.height}')
+
+# 创建对象
+haier1 = Washer()
+
+# 添加实例属性
+haier1.width = 500
+haier1.height = 800
+
+haier1.print_info()
+----
+
+== 四. 魔法方法
+
+在Python中，`__xx__()`的函数叫做魔法方法，指的是具有特殊功能的函数。
+
+=== 4.1 `__init__()`
+
+==== 4.1.1 体验`__init__()`
+
+思考：洗衣机的宽度高度是与生俱来的属性，可不可以在生产过程中就赋予这些属性呢？
+
+答：理应如此。
+
+==`__init__()`方法的作用：初始化对象。==
+
+[source,python]
+----
+class Washer():
+    
+    # 定义初始化功能的函数
+    def __init__(self):
+        # 添加实例属性
+        self.width = 500
+        self.height = 800
+
+
+    def print_info(self):
+        # 类里面调用实例属性
+        print(f'洗衣机的宽度是{self.width}, 高度是{self.height}')
+
+
+haier1 = Washer()
+haier1.print_info()
+----
+
+____
+注意：
+
+* `__init__()`方法，在创建一个对象时默认被调用，不需要手动调用
+* `__init__(self)`中的self参数，不需要开发者传递，python解释器会自动把当前的对象引用传递过去。
+____
+
+==== 4.1.2 带参数的`__init__()`
+
+思考：一个类可以创建多个对象，如何对不同的对象设置不同的初始化属性呢？
+
+答：传参数。
+
+[source,python]
+----
+class Washer():
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def print_info(self):
+        print(f'洗衣机的宽度是{self.width}')
+        print(f'洗衣机的高度是{self.height}')
+
+
+haier1 = Washer(10, 20)
+haier1.print_info()
+
+
+haier2 = Washer(30, 40)
+haier2.print_info()
+----
+
+=== 4.2 `__str__()`
+
+当使用print输出对象的时候，默认打印对象的内存地址。如果类定义了`__str__`方法，那么就会打印从在这个方法中
+return 的数据。主要用作对对象的描述。
+
+[source,python]
+----
+class Washer():
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def __str__(self):
+        return '这是海尔洗衣机的说明书'
+
+
+haier1 = Washer(10, 20)
+# 这是海尔洗衣机的说明书
+print(haier1)
+----
+
+=== 4.3 `__del__()`
+
+当删除（销毁）对象时，python解释器也会默认调用`__del__()`方法。
+
+[source,python]
+----
+class Washer():
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def __del__(self):
+        print(f'{self}对象已经被删除')
+
+
+haier1 = Washer(10, 20)
+
+# <__main__.Washer object at 0x0000026118223278>对象已经被删除
+del haier1
+----
+
+== 课程目标
+
+* 面向对象三大特性
+* 类属性和实例属性
+* 类方法和静态方法
+
+== 面向对象三大特性
+
+* 封装
+** 将属性和方法书写到类的里面的操作即为封装
+** 封装可以为属性和方法添加私有权限
+* 继承
+** 子类默认继承父类的所有属性和方法
+** 子类可以重写父类属性和方法
+* 多态
+** 传入不同的对象，产生不同的结果
+
+== 课程：面向对象-继承
+
+== 目标
+
+* 继承的概念
+* 单继承
+* 多继承
+* 子类重写父类的同名属性和方法
+* 子类调用父类的同名属性和方法
+* 多层继承
+* super()
+* 私有属性和私有方法
+
+== 一. 继承的概念
+
+生活中的继承，一般指的是子女继承父辈的财产。
+
+image::C:\Users\amdin\Desktop\python基础公开课\笔记\图片\1.png[1]
+
+* 拓展1：经典类或旧式类
+
+不由任意内置类型派生出的类，称之为经典类。
+
+[source,python]
+----
+class 类名:
+    代码
+    ......
+----
+
+* 拓展2：新式类
+
+[source,python]
+----
+class 类名(object):
+  代码
+----
+
+Python面向对象的继承指的是多个类之间的所属关系，即子类默认继承父类的所有属性和方法，具体如下：
+
+[source,python]
+----
+# 父类A
+class A(object):
+    def __init__(self):
+        self.num = 1
+
+    def info_print(self):
+        print(self.num)
+
+# 子类B
+class B(A):
+    pass
+
+
+result = B()
+result.info_print()  # 1
+----
+
+____
+在Python中，所有类默认继承object类，object类是顶级类或基类；其他子类叫做派生类。
+____
+
+== 二. 单继承
+
+____
+故事主线：一个煎饼果子老师傅，在煎饼果子界摸爬滚打多年，研发了一套精湛的摊煎饼果子的技术。师父要把这套技术传授给他的唯一的最得意的徒弟。
+____
+
+分析：徒弟是不是要继承师父的所有技术？
+
+[source,python]
+----
+# 1. 师父类
+class Master(object):
+    def __init__(self):
+        self.kongfu = '[古法煎饼果子配方]'
+
+    def make_cake(self):
+        print(f'运用{self.kongfu}制作煎饼果子')
+
+        
+# 2. 徒弟类
+class Prentice(Master):
+    pass
+
+
+# 3. 创建对象daqiu
+daqiu = Prentice()
+# 4. 对象访问实例属性
+print(daqiu.kongfu)
+# 5. 对象调用实例方法
+daqiu.make_cake()
+----
+
+== 三. 多继承
+
+____
+故事推进：daqiu是个爱学习的好孩子，想学习更多的煎饼果子技术，于是，在百度搜索到瑞通程序员，报班学习煎饼果子技术。
+____
+
+所谓多继承意思就是一个类同时继承了多个父类。
+
+[source,python]
+----
+class Master(object):
+    def __init__(self):
+        self.kongfu = '[古法煎饼果子配方]'
+
+    def make_cake(self):
+        print(f'运用{self.kongfu}制作煎饼果子')
+
+
+# 创建学校类
+class School(object):
+    def __init__(self):
+        self.kongfu = '[瑞通煎饼果子配方]'
+
+    def make_cake(self):
+        print(f'运用{self.kongfu}制作煎饼果子')
+
+
+class Prentice(School, Master):
+    pass
+
+
+daqiu = Prentice()
+print(daqiu.kongfu)
+daqiu.make_cake()
+----
+
+____
+注意：当一个类有多个父类的时候，默认使用第一个父类的同名属性和方法。
+____
+
+== 四. 子类重写父类同名方法
+
+____
+故事：daqiu掌握了师父和培训的技术后，自己潜心钻研出自己的独门配方的一套全新的煎饼果子技术。
+____
+
+[source,python]
+----
+class Master(object):
+    def __init__(self):
+        self.kongfu = '[古法煎饼果子配方]'
+
+    def make_cake(self):
+        print(f'运用{self.kongfu}制作煎饼果子')
+
+
+class School(object):
+    def __init__(self):
+        self.kongfu = '[瑞通煎饼果子配方]'
+
+    def make_cake(self):
+        print(f'运用{self.kongfu}制作煎饼果子')
+
+
+# 独创配方
+class Prentice(School, Master):
+    def __init__(self):
+        self.kongfu = '[独创煎饼果子配方]'
+
+    def make_cake(self):
+        print(f'运用{self.kongfu}制作煎饼果子')
+
+
+daqiu = Prentice()
+print(daqiu.kongfu)
+daqiu.make_cake()
+
+print(Prentice.__mro__)
+----
+
+____
+子类和父类具有同名属性和方法，默认使用子类的同名属性和方法。
+
+我们不仅想要调用子类的方法，还想同时调用父类的方法，可以使用super关键字实现
+____
+
+[source,python]
+----
+----
+
+== 五. 多层继承
+
+____
+故事：N年后，daqiu老了，想要把所有技术传承给自己的徒弟。
+____
+
+[source,python]
+----
+class Master(object):
+    def __init__(self):
+        self.kongfu = '[古法煎饼果子配方]'
+
+    def make_cake(self):
+        print(f'运用{self.kongfu}制作煎饼果子')
+
+
+class School(object):
+    def __init__(self):
+        self.kongfu = '[瑞通煎饼果子配方]'
+
+    def make_cake(self):
+        print(f'运用{self.kongfu}制作煎饼果子')
+
+
+class Prentice(School, Master):
+    def __init__(self):
+        self.kongfu = '[独创煎饼果子配方]'
+
+    def make_cake(self):
+        self.__init__()
+        print(f'运用{self.kongfu}制作煎饼果子')
+
+    def make_master_cake(self):
+        Master.__init__(self)
+        Master.make_cake(self)
+
+    def make_school_cake(self):
+        School.__init__(self)
+        School.make_cake(self)
+
+
+# 徒孙类
+class Tusun(Prentice):
+    pass
+
+
+xiaoqiu = Tusun()
+
+xiaoqiu.make_cake()
+
+xiaoqiu.make_school_cake()
+
+xiaoqiu.make_master_cake()
+----
+
+== 七. super()调用父类方法
+
+super():子类重写父类的方法后，如果想要父类的代码也同样执行，需要使用super()调用父类的代
+码
+
+____
+注意：使用super() 可以自动查找父类。调用顺序遵循 `__mro__`
+类属性的顺序。比较适合单继承使用。
+____
+
+== 八. 多态
+
+=== 1 了解多态
+
+多态指的是一类事物有多种形态，（一个抽象类有多个子类，因而多态的概念依赖于继承）。
+
+* 定义：多态是一种使用对象的方式，子类重写父类方法，调用不同子类对象的相同父类方法，可以产生不同的执行结果
+* 好处：调用灵活，有了多态，更容易编写出通用的代码，做出通用的编程，以适应需求的不断变化！
+* 实现步骤：
+** 定义父类，并提供公共方法
+** 定义子类，并重写父类方法
+** 传递子类对象给调用者，可以看到不同子类执行效果不同
+
+=== 2 体验多态
+
+[source,python]
+----
+class Dog(object):
+    def work(self):  # 父类提供统一的方法，哪怕是空方法
+        print('指哪打哪...')
+
+
+class ArmyDog(Dog):  # 继承Dog类
+    def work(self):  # 子类重写父类同名方法
+        print('追击敌人...')
+
+
+class DrugDog(Dog):
+    def work(self):
+        print('追查毒品...')
+
+
+class Person(object):
+    def work_with_dog(self, dog):  # 传入不同的对象，执行不同的代码，即不同的work函数
+        dog.work()
+
+
+ad = ArmyDog()
+dd = DrugDog()
+
+p = Person()
+p.work_with_dog(ad)
+p.work_with_dog(dd)
+----

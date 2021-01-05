@@ -1,0 +1,106 @@
+== 笔记8
+
+== Flask介绍
+
+=== 1 学习Flask框架的原因
+
+image:C:\Users\admin\Desktop\2018年Web框架占比.png[image]
+
+2018 Python官方年度调研报告显示Flask与Django为Python
+Web开发使用最主要的两个框架
+
+Flask诞生于2010年，是Armin ronacher（人名）用 Python 语言基于 Werkzeug
+工具箱编写的轻量级Web开发框架。
+
+Flask
+本身相当于一个内核，其他几乎所有的功能都要用到扩展（邮件扩展Flask-Mail，用户认证Flask-Login，数据库Flask-SQLAlchemy），都需要用第三方的扩展来实现。比如可以用
+Flask 扩展加入ORM、窗体验证工具，文件上传、身份验证等。Flask
+没有默认使用的数据库，你可以选择 MySQL，也可以用 NoSQL。
+
+其 WSGI 工具箱采用 Werkzeug（路由模块），模板引擎则使用
+Jinja2。这两个也是 Flask 框架的核心。
+
+*最新版本 1.0.2*
+
+=== 2 框架对比
+
+==== 1） 框架轻重
+
+重量级的框架：为方便业务程序的开发，提供了丰富的工具、组件，如Django
+
+轻量级的框架：只提供Web框架的核心功能，自由、灵活、高度定制，如Flask、Tornado
+
+==== 2）与Django对比
+
+django提供了：
+
+django-admin快速创建项目工程目录
+
+manage.py 管理项目工程
+
+orm模型（数据库抽象层）
+
+admin后台管理站点
+
+缓存机制
+
+文件存储系统
+
+用户认证系统
+
+而这些，flask都没有，都需要扩展包来提供
+
+=== 3 Flask文档
+
+[arabic]
+. 中文文档（http://docs.jinkan.org/docs/flask/）
+. 英文文档（http://flask.pocoo.org/docs/1.0/）
+
+=== 4. 安装Flask
+
+使用flask 1.0.2版本，注意需要联网
+
+[source,shell]
+----
+pip install flask
+----
+
+==== Flask的HelloWorld程序
+
+==== 1 目标
+
+*掌握flask程序的编写方式*
+
+==== 2 Flask程序编写
+
+创建helloworld.py文件
+
+[source,python]
+----
+# 导入Flask类
+from flask import Flask
+
+#Flask类接收一个参数__name__
+app = Flask(__name__)
+
+# 装饰器的作用是将路由映射到视图函数index
+@app.route('/')
+def index():
+    return 'Hello World'
+
+# Flask应用程序实例的run方法启动WEB服务器
+if __name__ == '__main__':
+    app.run()
+----
+
+===== 3 启动运行
+
+* 手动运行
++
+[source,shell]
+----
+python helloworld.py
+----
+* pycharm 运行
++
+像正常运行普通python程序一样即可。
